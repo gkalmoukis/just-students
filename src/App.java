@@ -272,7 +272,45 @@ public class App extends JFrame {
         menuItemDeleteStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Delete Student action");
-//                TODO: Delete student and student enrolls
+                String message = "";
+                JTextField registryIdField = new JTextField(10);
+
+
+                JPanel newDeleteStudentPanel = new JPanel();
+
+                newDeleteStudentPanel.add(new JLabel("STUDENT"));
+                newDeleteStudentPanel.add(registryIdField);
+
+                int result = JOptionPane.showConfirmDialog(null, newDeleteStudentPanel, "DELETE STUDENT", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int student = Integer.parseInt(registryIdField.getText());
+                    int studentIteratorIndex = 0;
+                    int studentToRemove = -1;
+                    ArrayList enrollsToRemove = new ArrayList();
+
+                    for (Student s : mstudents) {
+                        if (s.getRegistryId() == student) {
+                            studentToRemove = studentIteratorIndex;
+                            for (Iterator<Enroll> iterator = menrolls.iterator(); iterator.hasNext();) {
+                                Enroll enrollToRemove = iterator.next();
+                                if(enrollToRemove.getStudent() == student) {
+                                    iterator.remove();
+                                }
+                            }
+                            message = "Student " + student + " deleted";
+                            outputLabel.setText("<html>" + message + "</html>");
+                        }
+                        studentIteratorIndex++;
+                    }
+                    if(studentToRemove != -1){
+                        mstudents.remove(studentToRemove);
+                    }
+                    if(!enrollsToRemove.isEmpty()){
+                        for (Object enrollToRemove : enrollsToRemove) {
+                            System.out.print(enrollToRemove);
+                        }
+                    }
+                }
             }
         });
         studentMenu.add(menuItemDeleteStudent);
