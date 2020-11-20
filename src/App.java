@@ -346,6 +346,7 @@ public class App extends JFrame {
                             }
                         }
                     }
+
                     outputLabel.setText("<html>"+lessonDisplay+"</html>");
                 }
             }
@@ -356,9 +357,27 @@ public class App extends JFrame {
         menuItemSelectSemester.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("show enrolls action");
-//                TODO: Με την επιλογή αυτή εμφανίζεται διάλογος στον οποίο ο
-//                  χρήστης εισάγει το επιθυμητό εξάμηνο και εμφανίζονται όλα τα μαθήματα που
-//                  διατίθενται στο συγκεκριμένο εξάμηνο.
+
+                String semesterDisplay = "";
+
+                JTextField semesterField = new JTextField(10);
+
+                JPanel newShowSemesterPanel = new JPanel();
+
+                newShowSemesterPanel.add(new JLabel("SEMESTER"));
+                newShowSemesterPanel.add(semesterField);
+
+                int result = JOptionPane.showConfirmDialog(null, newShowSemesterPanel, "SHOW SEMESTER", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int semester = Integer.parseInt(semesterField.getText());
+                    for (Lesson l : mlessons) {
+                        if(l.getSemester() == semester){
+                            semesterDisplay += "<br>"+l.toString();
+                        }
+                    }
+
+                }
+                outputLabel.setText("<html>"+semesterDisplay+"</html>");
             }
         });
         lessonMenu.add(menuItemSelectSemester);
