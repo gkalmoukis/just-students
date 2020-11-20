@@ -3,12 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class App extends JFrame {
 
                         int student = Integer.parseInt(enroll[0]);
                         int lesson = Integer.parseInt(enroll[1]);
-                        int grade = Integer.parseInt(enroll[2]);
+                        double grade = Double.parseDouble(enroll[2]);
 
                         menrolls.add(new Enroll(student, lesson, grade));
                     }
@@ -112,7 +112,37 @@ public class App extends JFrame {
         menuItemSave.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ev) {
                System.out.print("Save data");
-               //TODO: Με την επιλογή αυτήν το περιεχόμενο των πινάκων mstudents, mlessons και menrolls γεμίζει από αρχείο της επιλογής σας.
+               try {
+                   BufferedWriter StudentsWriter;
+                   StudentsWriter = Files.newBufferedWriter(Paths.get("src/students.txt"));
+                   for ( Student s : mstudents) {
+                       System.out.print(s.toCsvLine());
+                       StudentsWriter.write(s.toCsvLine());
+                       StudentsWriter.newLine();
+                   }
+                   StudentsWriter.close();
+
+                   BufferedWriter LessonsWriter;
+                   LessonsWriter = Files.newBufferedWriter(Paths.get("src/lessons.txt"));
+                   for ( Lesson l : mlessons) {
+                       System.out.print(l.toCsvLine());
+                       LessonsWriter.write(l.toCsvLine());
+                       LessonsWriter.newLine();
+                   }
+                   LessonsWriter.close();
+
+                   BufferedWriter EnrollsWriter;
+                   EnrollsWriter = Files.newBufferedWriter(Paths.get("src/enrolls.txt"));
+                   for ( Enroll e : menrolls) {
+                       System.out.print(e.toCsvLine());
+                       EnrollsWriter.write(e.toCsvLine());
+                       EnrollsWriter.newLine();
+                   }
+                   EnrollsWriter.close();
+
+               } catch (IOException ex) {
+                   ex.printStackTrace();
+               }
            }
         });
         fileMenu.add(menuItemSave);
@@ -127,8 +157,8 @@ public class App extends JFrame {
         fileMenu.add(menuItemExit);
 
         JMenuItem menuItemNewStudent = new JMenuItem("NEW STUDENT");
-        menuItemExit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
+        menuItemNewStudent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 System.out.print("New student");
                 JTextField idField = new JTextField(10);
                 JTextField nameField = new JTextField(10);
@@ -188,7 +218,31 @@ public class App extends JFrame {
         menuItemNewLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("New lesson action");
+                JTextField idField = new JTextField(10);
+                JTextField titleField = new JTextField(10);
+                JTextField semesterField = new JTextField(10);
 
+                JPanel newLessonPanel = new JPanel();
+
+                newLessonPanel.add(new JLabel("ID"));
+                newLessonPanel.add(idField);
+
+                newLessonPanel.add(new JLabel("TITLE"));
+                newLessonPanel.add(titleField);
+
+                newLessonPanel.add(new JLabel("SEMESTER"));
+                newLessonPanel.add(semesterField);
+
+                int result = JOptionPane.showConfirmDialog(null, newLessonPanel,
+                        "Add New Student", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int id = Integer.parseInt(idField.getText());
+                    String title =  titleField.getText();
+                    int semester = Integer.parseInt(semesterField.getText());
+
+                    Lesson newLesson = new Lesson(id,title,semester);
+                    mlessons.add(newLesson);
+                }
             }
         });
         lessonMenu.add(menuItemNewLesson);

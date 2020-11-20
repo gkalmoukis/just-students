@@ -43,4 +43,8 @@ class Student{
                 ", semester=" + semester +
                 '}';
     }
+
+    public String toCsvLine() {
+        return id+","+name+","+semester;
+    }
 }

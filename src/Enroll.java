@@ -43,4 +43,7 @@ public class Enroll {
                 '}';
     }
 
+    public String toCsvLine() {
+        return student+","+lesson+","+grade;
+    }
 }
