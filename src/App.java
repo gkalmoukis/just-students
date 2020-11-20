@@ -272,7 +272,7 @@ public class App extends JFrame {
         menuItemDeleteStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Delete Student action");
-
+//                TODO: Delete student and student enrolls
             }
         });
         studentMenu.add(menuItemDeleteStudent);
@@ -315,6 +315,39 @@ public class App extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("show enrolls action");
 
+                String lessonDisplay = "";
+
+                JTextField idField = new JTextField(10);
+
+                JPanel newShowLessonPanel = new JPanel();
+
+                newShowLessonPanel.add(new JLabel("LESSON"));
+                newShowLessonPanel.add(idField);
+
+                int result = JOptionPane.showConfirmDialog(null, newShowLessonPanel, "SHOW LESSON", JOptionPane.OK_CANCEL_OPTION);
+
+                if (result == JOptionPane.OK_OPTION) {
+                    int lesson = Integer.parseInt(idField.getText());
+                    for (Lesson l : mlessons) {
+                        if (l.getId() == lesson) {
+                            lessonDisplay = l.toString();
+                            for (Enroll enroll : menrolls) {
+                                if(enroll.getLesson() == lesson){
+                                    int studentRegistryId = enroll.getStudent();
+                                    for (Student s : mstudents) {
+                                        if (s.getRegistryId() == studentRegistryId){
+                                            lessonDisplay += "<br>"+s.getRegistryId()+
+                                                    ", "+s.getName()+
+                                                    ", "+s.getSemester()+
+                                                    ", "+enroll.getGrade();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    outputLabel.setText("<html>"+lessonDisplay+"</html>");
+                }
             }
         });
         lessonMenu.add(menuItemShowEnrolls);
@@ -323,7 +356,9 @@ public class App extends JFrame {
         menuItemSelectSemester.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("show enrolls action");
-
+//                TODO: Με την επιλογή αυτή εμφανίζεται διάλογος στον οποίο ο
+//                  χρήστης εισάγει το επιθυμητό εξάμηνο και εμφανίζονται όλα τα μαθήματα που
+//                  διατίθενται στο συγκεκριμένο εξάμηνο.
             }
         });
         lessonMenu.add(menuItemSelectSemester);
@@ -332,13 +367,14 @@ public class App extends JFrame {
         menuItemDeleteLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("delete lesson action");
+//                TODO : ΔΙΑΓΡΑΦΗ ΜΑΘΗΜΑΤΟΣ. Με την επιλογή αυτή εμφανίζεται διάλογος στον οποίο ο
+//                    χρήστης εισάγει τον κωδικό ενός μαθήματος και γίνεται διαγραφή του αντίστοιχου
+//                    μαθήματος από τον πίνακα mlessons. Επιπλέον διαγράφονται και οι δηλώσεις για το
+//                    συγκεκριμένο μάθημα από τον πίνακα menrolls.
 
             }
         });
         lessonMenu.add(menuItemDeleteLesson);
-
-
-
 
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
 
