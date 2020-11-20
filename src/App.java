@@ -192,6 +192,37 @@ public class App extends JFrame {
         menuItemEnrollLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Enroll lesson action");
+                JComboBox studentComboBox = new JComboBox();
+                JComboBox lessonComboBox = new JComboBox();
+                JTextField gradeField = new JTextField(10);
+
+                for (Student s : mstudents) {
+                    studentComboBox.addItem(s.getName());
+                }
+                for (Lesson l : mlessons) {
+                    lessonComboBox.addItem(l.getTitle());
+                }
+
+                JPanel newEnrollPanel = new JPanel();
+
+                newEnrollPanel.add(new JLabel("STUDENT"));
+                newEnrollPanel.add(studentComboBox);
+
+                newEnrollPanel.add(new JLabel("LESSON"));
+                newEnrollPanel.add(lessonComboBox);
+
+                newEnrollPanel.add(new JLabel("GRADE"));
+                newEnrollPanel.add(gradeField);
+
+                int result = JOptionPane.showConfirmDialog(null, newEnrollPanel, "ENROLL LESSON", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int student = mstudents.get(studentComboBox.getSelectedIndex()).getRegistryId();
+                    int lesson = mlessons.get(lessonComboBox.getSelectedIndex()).getId();
+                    double grade = Double.parseDouble(gradeField.getText());
+
+                    Enroll newEnroll = new Enroll(student,lesson,grade);
+                    menrolls.add(newEnroll);
+                }
             }
         });
         studentMenu.add(menuItemEnrollLesson);
