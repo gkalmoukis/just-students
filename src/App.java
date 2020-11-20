@@ -2,15 +2,11 @@ import javax.management.JMException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import java.io.*;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 public class App extends JFrame {
 
@@ -62,6 +58,7 @@ public class App extends JFrame {
                     br = new BufferedReader(new FileReader(lessonsFile));
                     while ((line = br.readLine()) != null) {
                         String[] lesson = line.split(splitBy);
+
                         int id = Integer.parseInt(lesson[0]);
                         String title = lesson[1];
                         int semester = Integer.parseInt(lesson[2]);
@@ -86,18 +83,18 @@ public class App extends JFrame {
                 } finally {
                     if (br != null) {
                         try {
-                            for (Lesson l : mlessons)
-                            {
+                            for (Lesson l : mlessons) {
                                 System.out.println(l.toString());
                             }
-                            for (Student s : mstudents)
-                            {
+
+                            for (Student s : mstudents) {
                                 System.out.println(s.toString());
                             }
-                            for (Enroll e : menrolls)
-                            {
+
+                            for (Enroll e : menrolls) {
                                 System.out.println(e.toString());
                             }
+
                             br.close();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -275,13 +272,13 @@ public class App extends JFrame {
                 String message = "";
                 JTextField registryIdField = new JTextField(10);
 
-
                 JPanel newDeleteStudentPanel = new JPanel();
 
                 newDeleteStudentPanel.add(new JLabel("STUDENT"));
                 newDeleteStudentPanel.add(registryIdField);
 
                 int result = JOptionPane.showConfirmDialog(null, newDeleteStudentPanel, "DELETE STUDENT", JOptionPane.OK_CANCEL_OPTION);
+
                 if (result == JOptionPane.OK_OPTION) {
                     int student = Integer.parseInt(registryIdField.getText());
                     int studentIteratorIndex = 0;
@@ -305,11 +302,7 @@ public class App extends JFrame {
                     if(studentToRemove != -1){
                         mstudents.remove(studentToRemove);
                     }
-                    if(!enrollsToRemove.isEmpty()){
-                        for (Object enrollToRemove : enrollsToRemove) {
-                            System.out.print(enrollToRemove);
-                        }
-                    }
+
                 }
             }
         });
