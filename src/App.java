@@ -424,11 +424,38 @@ public class App extends JFrame {
         menuItemDeleteLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("delete lesson action");
-//                TODO : ΔΙΑΓΡΑΦΗ ΜΑΘΗΜΑΤΟΣ. Με την επιλογή αυτή εμφανίζεται διάλογος στον οποίο ο
-//                    χρήστης εισάγει τον κωδικό ενός μαθήματος και γίνεται διαγραφή του αντίστοιχου
-//                    μαθήματος από τον πίνακα mlessons. Επιπλέον διαγράφονται και οι δηλώσεις για το
-//                    συγκεκριμένο μάθημα από τον πίνακα menrolls.
+                String message = "";
+                JTextField idField = new JTextField(10);
 
+                JPanel newDeleteStudentPanel = new JPanel();
+
+                newDeleteStudentPanel.add(new JLabel("LESSON"));
+                newDeleteStudentPanel.add(idField);
+
+                int result = JOptionPane.showConfirmDialog(null, newDeleteStudentPanel, "DELETE LESSON", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int lesson = Integer.parseInt(idField.getText());
+                    int lessonIteratorIndex = 0;
+                    int lessonToRemove = -1;
+
+                    for (Lesson s : mlessons) {
+                        if (s.getId() == lesson) {
+                            lessonToRemove = lessonIteratorIndex;
+                            for (Iterator<Enroll> iterator = menrolls.iterator(); iterator.hasNext(); ) {
+                                Enroll enrollToRemove = iterator.next();
+                                if (enrollToRemove.getLesson() == lesson) {
+                                    iterator.remove();
+                                }
+                            }
+                            message = "Lesson " + lesson + " deleted";
+                            outputLabel.setText("<html>" + message + "</html>");
+                        }
+                        lessonIteratorIndex++;
+                    }
+                    if (lessonToRemove != -1) {
+                        mlessons.remove(lessonToRemove);
+                    }
+                }
             }
         });
         lessonMenu.add(menuItemDeleteLesson);
