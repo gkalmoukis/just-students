@@ -150,8 +150,7 @@ public class App extends JFrame {
         JMenuItem menuItemExit = new JMenuItem("EXIT");
         menuItemExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                System.out.print("Exit");
-                //TODO: Με την επιλογή αυτή τερματίζει η εφαρμογή.
+                System.exit(0);
             }
         });
         fileMenu.add(menuItemExit);
