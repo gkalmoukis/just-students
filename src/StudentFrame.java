@@ -33,7 +33,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemLoad = new JMenuItem("LOAD");
         menuItemLoad.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                System.out.print("Load data action");
                 String studentsFile = "src/students.txt";
                 String lessonsFile = "src/lessons.txt";
                 String enrollsFile = "src/enrolls.txt";
@@ -83,18 +82,6 @@ public class StudentFrame extends JFrame {
                 } finally {
                     if (br != null) {
                         try {
-                            for (Lesson l : mlessons) {
-                                System.out.println(l.toString());
-                            }
-
-                            for (Student s : mstudents) {
-                                System.out.println(s.toString());
-                            }
-
-                            for (Enroll e : menrolls) {
-                                System.out.println(e.toString());
-                            }
-
                             br.close();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -108,12 +95,10 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemSave = new JMenuItem("SAVE");
         menuItemSave.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ev) {
-               System.out.print("Save data");
                try {
                    BufferedWriter StudentsWriter;
                    StudentsWriter = Files.newBufferedWriter(Paths.get("src/students.txt"));
                    for ( Student s : mstudents) {
-                       System.out.print(s.toCsvLine());
                        StudentsWriter.write(s.toCsvLine());
                        StudentsWriter.newLine();
                    }
@@ -122,7 +107,6 @@ public class StudentFrame extends JFrame {
                    BufferedWriter LessonsWriter;
                    LessonsWriter = Files.newBufferedWriter(Paths.get("src/lessons.txt"));
                    for ( Lesson l : mlessons) {
-                       System.out.print(l.toCsvLine());
                        LessonsWriter.write(l.toCsvLine());
                        LessonsWriter.newLine();
                    }
@@ -131,7 +115,6 @@ public class StudentFrame extends JFrame {
                    BufferedWriter EnrollsWriter;
                    EnrollsWriter = Files.newBufferedWriter(Paths.get("src/enrolls.txt"));
                    for ( Enroll e : menrolls) {
-                       System.out.print(e.toCsvLine());
                        EnrollsWriter.write(e.toCsvLine());
                        EnrollsWriter.newLine();
                    }
@@ -155,7 +138,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemNewStudent = new JMenuItem("NEW STUDENT");
         menuItemNewStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("New student");
                 JTextField idField = new JTextField(10);
                 JTextField nameField = new JTextField(10);
                 JTextField semesterField = new JTextField(10);
@@ -188,7 +170,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemEnrollLesson = new JMenuItem("ENROLL LESSON");
         menuItemEnrollLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("Enroll lesson action");
                 JComboBox studentComboBox = new JComboBox();
                 JComboBox lessonComboBox = new JComboBox();
                 JTextField gradeField = new JTextField(10);
@@ -227,12 +208,9 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemShowStudent = new JMenuItem("SHOW STUDENT");
         menuItemShowStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("Show Student action");
-
                 String studentDisplay;
 
                 JTextField registryIdField = new JTextField(10);
-
 
                 JPanel newShowStudentPanel = new JPanel();
 
@@ -244,7 +222,6 @@ public class StudentFrame extends JFrame {
                     int student = Integer.parseInt(registryIdField.getText());
                     for (Student s : mstudents) {
                         if(s.getRegistryId() == student){
-                            System.out.print(s.toString());
                             studentDisplay = s.toString();
                             double gradeSum = 0.0;
                             int enrolledLessonCount = 0;
@@ -268,7 +245,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemDeleteStudent = new JMenuItem("DELETE STUDENT");
         menuItemDeleteStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("Delete Student action");
                 String message = "";
                 JTextField registryIdField = new JTextField(10);
 
@@ -311,7 +287,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemNewLesson = new JMenuItem("NEW LESSON");
         menuItemNewLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("New lesson action");
                 JTextField idField = new JTextField(10);
                 JTextField titleField = new JTextField(10);
                 JTextField semesterField = new JTextField(10);
@@ -344,8 +319,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemShowEnrolls = new JMenuItem("SHOW ENROLLS");
         menuItemShowEnrolls.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("show enrolls action");
-
                 String lessonDisplay = "";
 
                 JTextField idField = new JTextField(10);
@@ -387,8 +360,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemSelectSemester = new JMenuItem("SELECT SEMESTER");
         menuItemSelectSemester.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("show enrolls action");
-
                 String semesterDisplay = "";
 
                 JTextField semesterField = new JTextField(10);
@@ -416,7 +387,6 @@ public class StudentFrame extends JFrame {
         JMenuItem menuItemDeleteLesson = new JMenuItem("DELETE LESSON");
         menuItemDeleteLesson.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print("delete lesson action");
                 String message = "";
                 JTextField idField = new JTextField(10);
 
