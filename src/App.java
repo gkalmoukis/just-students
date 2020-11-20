@@ -23,7 +23,7 @@ public class App extends JFrame {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
-
+        JLabel outputLabel = new JLabel();
         JMenuBar menuBar = new JMenuBar();
 
         JMenu fileMenu = new JMenu("FILE");
@@ -231,6 +231,39 @@ public class App extends JFrame {
         menuItemShowStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.print("Show Student action");
+
+                String studentDisplay;
+
+                JTextField registryIdField = new JTextField(10);
+
+
+                JPanel newShowStudentPanel = new JPanel();
+
+                newShowStudentPanel.add(new JLabel("STUDENT"));
+                newShowStudentPanel.add(registryIdField);
+
+                int result = JOptionPane.showConfirmDialog(null, newShowStudentPanel, "ENROLL LESSON", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    int student = Integer.parseInt(registryIdField.getText());
+                    for (Student s : mstudents) {
+                        if(s.getRegistryId() == student){
+                            System.out.print(s.toString());
+                            studentDisplay = s.toString();
+                            double gradeSum = 0.0;
+                            int enrolledLessonCount = 0;
+                            for (Enroll enroll : menrolls) {
+                                if(enroll.getStudent() == student){
+                                    enrolledLessonCount ++;
+                                    gradeSum += enroll.getGrade();
+                                }
+                            }
+                            studentDisplay += "<br>" + "AVG= " +gradeSum / enrolledLessonCount;
+                            outputLabel.setText("<html>"+studentDisplay+"</html>");
+                        }
+                    }
+
+
+                }
             }
         });
         studentMenu.add(menuItemShowStudent);
@@ -304,7 +337,16 @@ public class App extends JFrame {
         });
         lessonMenu.add(menuItemDeleteLesson);
 
+
+
+
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
+
+        outputLabel.setText("");
+        JPanel mainFramePanel = new JPanel();
+        mainFramePanel.add(outputLabel);
+        frame.add(mainFramePanel);
+
         frame.setVisible(true);
     }
 }
